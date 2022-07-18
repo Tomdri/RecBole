@@ -1,0 +1,20 @@
+Bert4rec-
+CORE-
+FDSA-selected_feature
+GCSAN-
+Gru4rec-
+Gru4recF-selected_feature
+Gru4recKG-
+LightSans-
+Narm-ok
+NextItNet-
+S3Rec-
+SASRec-
+SASRecF-selected_feature
+Sine-
+SRGnn-
+Stamp
+!git clone https://github.com/RUCAIBox/RecBole.git
+cd RecBole
+pip install -r requirements.txt
+!python ./run_recbole.py --model="SASRec" --dataset="items" --config_files="recbole/properties/dataset/sequential.yaml"
