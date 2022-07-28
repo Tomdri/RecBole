@@ -32,8 +32,6 @@ if __name__ == '__main__':
         results = {}
 
         for model_name in model_list:
-            if model_name == 'xSINE-Jul-14-2022_17-11-49.pth' or model_name == 'xSTAMP-Jul-14-2022_19-31-25.pth':
-                continue
             try:
                 config, model, dataset, train_data, valid_data, test_data = load_data_and_model(
                     model_file='./saved/sequential/' + model_name
@@ -62,7 +60,7 @@ if __name__ == '__main__':
                     print(e)
                     continue
 
-                top_items_internal_ids = scores.numpy().argsort()[::-1][:len(prediction_data[order_id])] if model_name[0] != 'x' else scores[0].numpy().argsort()[::-1][:len(prediction_data[order_id])]
+                top_items_internal_ids = scores[0].numpy().argsort()[::-1][:len(prediction_data[order_id])]
                 top_items_internal_ids_list = [i for i in top_items_internal_ids]
                 top_items_ids = dataset.id2token(dataset.iid_field, top_items_internal_ids_list)
 
@@ -76,48 +74,53 @@ if __name__ == '__main__':
         for result in results:
             print(result, results[result])
             print('Average', np.mean(results[result]))
+            print('')
 
-    #     score_results = [0]*100
-    #     model_results = ['']*100
+        score_results = [0]*100
+        model_results = ['']*100
 
-    # for i in range(100):
-    #     for model_name in model_list:
-    #         model_name = model_name.split('-')[0]
-    #         if results[model_name][i] > score_results[i]:
-    #             score_results[i] = results[model_name][i]
-    #             model_results[i] = model_name
-    #         elif results[model_name][i] == score_results[i]:
-    #             model_results[i] = model_name if model_results[i] == '' else (model_results[i] + ' ' + model_name)
-    # print(model_results)
+    for i in range(100):
+        for model_name in model_list:
+            model_name = model_name.split('-')[0]
+            if results[model_name.split('-')[0]][i] > score_results[i]:
+                score_results[i] = results[model_name][i]
+                model_results[i] = model_name
+            elif results[model_name][i] == score_results[i]:
+                model_results[i] = model_name if model_results[i] == '' else (model_results[i] + ' ' + model_name)
+    print(model_results)
 
-    # models_scores = {}
-    # BPR = 0
-    # DMF = 0
-    # FISM = 0
-    # LightGCN = 0
-    # LINE = 0
-    # MacridVAE = 0
-    # SpectralCF = 0
-    # for best_model in model_results:
-    #     if 'BPR' in best_model:
-    #         BPR += 1
-    #     elif 'DMF' in best_model:
-    #         DMF += 1
-    #     elif 'FISM' in best_model:
-    #         FISM += 1
-    #     elif 'LightGCN' in best_model:
-    #         LightGCN += 1
-    #     elif 'LINE' in best_model:
-    #         LINE += 1
-    #     elif 'MacridVAE' in best_model:
-    #         MacridVAE += 1
-    #     elif 'SpectralCF' in best_model:
-    #         SpectralCF += 1
+    models_scores = {}
+    xGRU4RecInit = 0
+    xGRU4Rec4iter = 0
+    xGRU4Rec5iter = 0
+    xGRU4Rec20iter = 0
+    xNARMinit = 0
+    xNARM2iter = 0
+    xNARM3iter = 0
+    xSTAMP = 0
+    for best_model in model_results:
+        if 'xGRU4RecInit' in best_model:
+            xGRU4RecInit += 1
+        if 'xGRU4Rec4iter' in best_model:
+            xGRU4Rec4iter += 1
+        if 'xGRU4Rec5iter' in best_model:
+            xGRU4Rec5iter += 1
+        if 'xGRU4Rec20iter' in best_model:
+            xGRU4Rec20iter += 1
+        if 'xNARMinit' in best_model:
+            xNARMinit += 1
+        if 'xNARM2iter' in best_model:
+            xNARM2iter += 1
+        if 'xNARM3iter' in best_model:
+            xNARM3iter += 1
+        if 'xSTAMP' in best_model:
+            xSTAMP += 1
 
-    # print('BPR', BPR)
-    # print('DMF', DMF)
-    # print('FISM', FISM)
-    # print('LightGCN', LightGCN)
-    # print('LINE', LINE)
-    # print('MacridVAE', MacridVAE)
-    # print('SpectralCF', SpectralCF)
+    print('xGRU4RecInit', xGRU4RecInit)
+    print('xGRU4Rec4iter', xGRU4Rec4iter)
+    print('xGRU4Rec5iter', xGRU4Rec5iter)
+    print('xGRU4Rec20iter', xGRU4Rec20iter)
+    print('xNARMinit', xNARMinit)
+    print('xNARM2iter', xNARM2iter)
+    print('xNARM3iter', xNARM3iter)
+    print('xSTAMP', xSTAMP)

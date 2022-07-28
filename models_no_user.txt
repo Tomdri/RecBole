@@ -15,6 +15,8 @@ Sine-
 SRGnn-
 Stamp
 !git clone https://github.com/RUCAIBox/RecBole.git
+!git clone https://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@github.com/Tomdri/RecBole.git
+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
 cd RecBole
 pip install -r requirements.txt
 !python ./run_recbole.py --model="SASRec" --dataset="items" --config_files="recbole/properties/dataset/sequential.yaml"

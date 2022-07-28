@@ -8,7 +8,7 @@ seq_separator: " "
 
 # Common Features
 USER_ID_FIELD: user_id
-ITEM_ID_FIELD: item_id
+ITEM_ID_FIELD: product_code
 RATING_FIELD: rating
 TIME_FIELD: timestamp
 seq_len: ~
@@ -22,7 +22,7 @@ NEG_PREFIX: neg_
 
 # Selectively Loading
 load_col:
-  inter: [user_id, item_id, timestamp]
+  inter: [user_id, product_code, timestamp]
   # the others
 unload_col: ~
 unused_col: ~
